@@ -8,15 +8,27 @@ from eegnet import EEGNet
 from tsgl_loss import TSGLoss
 
 import numpy as np
+import random
+
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 if __name__ == "__main__":
+    seed = 46  # Change this for each run: 42, 43, 44, 45, 46
+    set_seed(seed)
+
     # --- Load your preprocessed data here ---
-    X = np.load('data/X_train.npy')  # shape: (N, 60, 500)
-    y = np.load('data/y_train.npy')  # shape: (N,)
+    X = np.load('data/X_trainval.npy')
+    y = np.load('data/y_trainval.npy')
 
     # Split into train and validation sets (80/20 split)
     X_train, X_val, y_train, y_val = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+        X, y, test_size=0.2, random_state=seed, stratify=y
     )
 
     # Convert to torch tensors
@@ -88,7 +100,7 @@ if __name__ == "__main__":
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             patience_counter = 0
-            torch.save(model.state_dict(), "eegnet_tsgl_best.pth")
+            torch.save(model.state_dict(), f"eegnet_tsgl_best_seed{seed}.pth")
         else:
             patience_counter += 1
             if patience_counter >= patience:
@@ -96,4 +108,4 @@ if __name__ == "__main__":
                 break
 
     # --- Save model ---
-    torch.save(model.state_dict(), "eegnet_tsgl.pth")
+    torch.save(model.state_dict(), f"eegnet_tsgl_last_seed{seed}.pth")

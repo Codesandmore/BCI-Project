@@ -1,6 +1,7 @@
 from load_bci_iii3a import load_bci_iii3a_mat
 from preprocess import preprocess_bci_iii3a, notch_filter_trials, bandpass_filter_trials, standardize_trials, crop_trials
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 subjects = ['k3b.mat', 'k6b.mat', 'l1b.mat']
 
@@ -52,5 +53,12 @@ y_all_clean = y_all[mask]
 print("After removing NaNs:", X_all_clean.shape, y_all_clean.shape)
 print("NaNs left:", np.isnan(X_all_clean).sum())
 
-np.save("data/X_train.npy", X_all_clean)
-np.save("data/y_train.npy", y_all_clean)
+# Split into train/validation and test sets
+X_trainval, X_test, y_trainval, y_test = train_test_split(
+    X_all_clean, y_all_clean, test_size=0.2, random_state=123, stratify=y_all_clean
+)
+
+np.save("data/X_trainval.npy", X_trainval)
+np.save("data/y_trainval.npy", y_trainval)
+np.save("data/X_test.npy", X_test)
+np.save("data/y_test.npy", y_test)
