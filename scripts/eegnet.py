@@ -14,28 +14,22 @@ class EEGNet(nn.Module):
         dropout_rate=0.25,
     ):
         super(EEGNet, self).__init__()
-        # 1. Temporal Convolution
         self.conv1 = nn.Conv2d(1, F1, (1, 64), padding=(0, 32), bias=False)
         self.bn1 = nn.BatchNorm2d(F1)
-        # 2. Depthwise Convolution (spatial)
         self.depthwise = nn.Conv2d(F1, F1 * D, (n_channels, 1), groups=F1, bias=False)
         self.bn2 = nn.BatchNorm2d(F1 * D)
-        # 3. 1D Conv (replaces separable conv)
         self.conv2 = nn.Conv2d(F1 * D, F2, (1, 16), padding=(0, 8), bias=False)
         self.bn3 = nn.BatchNorm2d(F2)
         self.dropout = nn.Dropout(dropout_rate)
-        # Placeholder for classifier, will be set dynamically
         self.classifier = None
         self.n_classes = n_classes
 
     def _set_classifier(self, x):
-        # x: tensor after flattening, shape (batch, features)
         in_features = x.shape[1]
         self.classifier = nn.Linear(in_features, self.n_classes).to(x.device)
 
     def forward(self, x):
-        # x: (batch, channels, samples)
-        x = x.unsqueeze(1)  # (batch, 1, channels, samples)
+        x = x.unsqueeze(1)
         x = self.conv1(x)
         x = self.bn1(x)
         x = F.elu(x)
@@ -50,7 +44,6 @@ class EEGNet(nn.Module):
         x = F.avg_pool2d(x, (1, 8))
         x = self.dropout(x)
         x = x.flatten(start_dim=1)
-        # Dynamically create classifier if not set
         if self.classifier is None:
             self._set_classifier(x)
         x = self.classifier(x)

@@ -1,11 +1,9 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 *.log
 
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -24,16 +22,13 @@ wheels/
 *.egg
 MANIFEST
 
-# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# IDE settings
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# Python virtual environments
 .env
 .venv/
 env/
@@ -42,7 +37,6 @@ ENV/
 eegnet-env/
 *.env
 
-# Data files (raw and processed)
 data/
 *.mat
 *.gdf
@@ -54,11 +48,9 @@ data/
 *.pickle
 *.csv
 
-# Model weights and checkpoints - uncomment if you want to include models in repo
-# *.pth
-# *.pkl
+*.pth
+*.pkl
 
-# Results and outputs
 results/
 outputs/
 logs/
@@ -68,7 +60,9 @@ figures/
 *.jpeg
 *.pdf
 
-# OS files
+validation_log.txt
+all_base_learners_fft.png
+
 .DS_Store
 Thumbs.db
 .directory

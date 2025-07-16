@@ -21,7 +21,7 @@ def bandpass_filter(data, low, high, fs, order=4):
 X = np.load('data/X_trainval.npy')
 y = np.load('data/y_trainval.npy')
 
-split_seed = 46  # Change this manually for each run
+split_seed = 46
 
 X_train, X_val, y_train, y_val = train_test_split(
     X, y, test_size=0.2, random_state=split_seed, stratify=y
@@ -54,7 +54,6 @@ clf.fit(X_train_fbcsp, y_train)
 y_pred = clf.predict(X_val_fbcsp)
 acc = accuracy_score(y_val, y_pred)
 
-# Save model in current directory
 model_filename = f"fbcsp_svm_seed_{split_seed}.pkl"
 with open(model_filename, 'wb') as f:
     pickle.dump({
@@ -65,7 +64,6 @@ with open(model_filename, 'wb') as f:
         "seed": split_seed
     }, f)
 
-# Save accuracy log in root
 with open("validation_log.txt", 'a') as f:
     f.write(f"Seed {split_seed}: Accuracy = {acc:.4f}\n")
 
