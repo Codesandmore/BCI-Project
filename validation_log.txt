@@ -1,0 +1,5 @@
+Seed 42: Accuracy = 0.7260
+Seed 43: Accuracy = 0.7368
+Seed 44: Accuracy = 0.7597
+Seed 45: Accuracy = 0.7303
+Seed 46: Accuracy = 0.7411

@@ -1,21 +1,44 @@
-# Byte-compiled / cache / logs
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 *.log
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# VS Code settings
+# IDE settings
+.idea/
 .vscode/
+*.swp
+*.swo
 
 # Python virtual environments
 .env
 .venv/
 env/
 venv/
+ENV/
 eegnet-env/
 *.env
 
@@ -28,11 +51,25 @@ data/
 *.npz
 *.h5
 *.hdf5
+*.pickle
+*.csv
 
-# Model weights and checkpoints
-*.pth
-*.pkl
+# Model weights and checkpoints - uncomment if you want to include models in repo
+# *.pth
+# *.pkl
+
+# Results and outputs
+results/
+outputs/
+logs/
+figures/
+*.png
+*.jpg
+*.jpeg
+*.pdf
 
 # OS files
 .DS_Store
 Thumbs.db
+.directory
+desktop.ini
